@@ -5,7 +5,7 @@ export default function Logo() {
         width="36"
         height="36"
         viewBox="0 0 60 40"
-        fill="none"
+        fill="#3B82F6"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

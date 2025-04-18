@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import { signIn } from "next-auth/react";
 import google from '../../../../app/assets/google.png'
 import Logo from "@/app/assets/svgs/Logo"
 import { Button } from "@/components/ui/button"
@@ -95,7 +96,9 @@ const LoginPage = () => {
                          <FaFacebook className="text-blue-500 text-[32px]"></FaFacebook>
                          <span className=''>Sign In With Facebook</span>
                      </button>
-                     <button className="cursor-pointer w-full font-medium flex mt-4 space-x-2 justify-center items-center h-[45px] border-2 border-black">
+                     <button onClick={()=>signIn('google',{
+                        callbackUrl:'http://localhost:3000/'
+                     })} className="cursor-pointer w-full font-medium flex mt-4 space-x-2 justify-center items-center h-[45px] border-2 border-black">
                          <Image src={google} height={30} width={30} alt='Google'></Image>
                          <span className=''>Sign In With Facebook</span>
                      </button>
