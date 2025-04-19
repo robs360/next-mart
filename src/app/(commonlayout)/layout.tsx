@@ -1,5 +1,6 @@
 import Footer from "@/components/Shared/Footer"
 import Navbar from "@/components/Shared/NavBar"
+import { getCurrentUser } from "@/services/Authservices"
 import { Tsession } from "@/types/type"
 import { authOptions } from "@/utils/authOption"
 import { getServerSession } from "next-auth"
@@ -8,9 +9,11 @@ import { getServerSession } from "next-auth"
 const CommonLayout=async ({children}:{children:React.ReactNode})=>{
     const session:Tsession | null =await getServerSession(authOptions)
     console.log(session)
+    const user=await getCurrentUser()
+    console.log("it is user ",user)
     return(
         <div>
-            <Navbar session={session}></Navbar>
+            <Navbar session={session} user={user}></Navbar>
             <main className="min-h-screen">
                 {children}
             </main>

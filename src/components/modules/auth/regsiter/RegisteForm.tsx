@@ -1,18 +1,20 @@
 "use client"
-import google from '../../../../app/assets/google.png'
+
 import Logo from "@/app/assets/svgs/Logo"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { RegisterUser } from '@/services/Authservices'
 import { TUser } from '@/types/type'
-import Image from 'next/image'
+
 import Link from 'next/link'
+import { useRouter } from "next/navigation"
 import {  FieldValues, SubmitHandler, useForm } from "react-hook-form"
-import { FaFacebook } from "react-icons/fa"
+
 import { toast } from 'sonner'
 
 const RegisterPage = () => {
+    const router=useRouter()
     const form = useForm()
     const {formState:{isSubmitting}}=form
     const onSubmit:SubmitHandler<FieldValues> =async (data) => {
@@ -27,6 +29,7 @@ const RegisterPage = () => {
                     },
                     position:"top-left"
                 })
+                router.push('/login')
              }
              else{
                 toast.error("Something went wrong",{

@@ -12,33 +12,39 @@ import Link from 'next/link'
 import {  FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { FaFacebook } from "react-icons/fa"
 import { toast } from 'sonner'
+import { LoginUser } from "@/services/Authservices";
+import { TLogin } from "@/types/type";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+    const router=useRouter()
     const form = useForm()
     const {formState:{isSubmitting}}=form
     const onSubmit:SubmitHandler<FieldValues> =async (data) => {
         
         try{
-            console.log(data)
-            //  const res=await RegisterUser(data as TUser)
-            //  if(res.success){
-            //     toast.success(res.message,{
-            //         style:{
-            //             background:"white",
-            //             color:"green"
-            //         },
-            //         position:"top-left"
-            //     })
-            //  }
-            //  else{
-            //     toast.error("Something went wrong",{
-            //         style:{
-            //             background:"white",
-            //             color:"red"
-            //         },
-            //         position:"top-left"
-            //     })
-            //  }
+            
+             const res=await LoginUser(data as TLogin)
+             
+             if(res.success){
+                toast.success(res.message,{
+                    style:{
+                        background:"white",
+                        color:"green"
+                    },
+                    position:"top-left"
+                })
+                router.push('/')
+             }
+             else{
+                toast.error("Something went wrong",{
+                    style:{
+                        background:"white",
+                        color:"red"
+                    },
+                    position:"top-left"
+                })
+             }
         }
         catch(err){
             console.log(err)
@@ -92,7 +98,9 @@ const LoginPage = () => {
             <div>
                  
                  <div className="mt-4">
-                     <button className="cursor-pointer w-full font-medium flex space-x-2 justify-center items-center h-[45px] border-2 border-blue-500">
+                     <button onClick={()=>signIn('facebook',{
+                        callbackUrl:'http://localhost:3000/'
+                     })} className="cursor-pointer w-full font-medium flex space-x-2 justify-center items-center h-[45px] border-2 border-blue-500">
                          <FaFacebook className="text-blue-500 text-[32px]"></FaFacebook>
                          <span className=''>Sign In With Facebook</span>
                      </button>

@@ -5,7 +5,10 @@ import { signOut } from "next-auth/react"
 import user from '../../app/assets/user.png'
 import Image from "next/image"
 const DropDown = () => {
-   
+    const handleLogout = async () => {
+        const response = await fetch('/api/logout', { method: 'POST' });
+        console.log("cookes removing",response)   
+      };
     return (
         <div className="mt-1">
             <DropdownMenu>
@@ -18,7 +21,7 @@ const DropDown = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                     <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                    <DropdownMenuItem><Button onClick={()=>signOut()}>Logout</Button></DropdownMenuItem>
+                    <DropdownMenuItem><Button onClick={()=>{handleLogout();signOut()}}>Logout</Button></DropdownMenuItem>
                    
                 </DropdownMenuContent>
             </DropdownMenu>

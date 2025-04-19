@@ -7,15 +7,17 @@ import Link from "next/link";
 import { Tsession } from "@/types/type";
 import DropDown from "../modules/dropdown";
 
-const Navbar = ({ session }: { session: Tsession | null }) => {
+const Navbar = ({ session,user }: { session: Tsession | null; user:any }) => {
+  console.log(user)
   return (
-    <header className="border-b bg-white shadow-sm top-0 z-50 w-full">
+    <header className="border-b bg-white shadow-sm top-0 z-50 w-full py-3">
       <div className="flex md:hidden p-3">
-        <input
-          type="text"
-          placeholder="Search for products..."
-          className="w-full px-5 py-2 rounded-full border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder:text-gray-500"
-        />
+      <input
+            type="text"
+            placeholder="Search for products..."
+            className="flex-grow px-5 py-2 rounded-l-full border border-blue-500 placeholder:text-gray-500"
+          />
+        <Button className="rounded-r-full py-[22px] bg-blue-600">Search</Button>
       </div>
       <div className="w-full px-4 flex justify-between items-center h-16 gap-4">
 
@@ -31,13 +33,14 @@ const Navbar = ({ session }: { session: Tsession | null }) => {
           <input
             type="text"
             placeholder="Search for products..."
-            className="w-full px-5 py-2 rounded-full border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder:text-gray-500"
+            className="flex-grow px-5 py-2 rounded-l-full border border-blue-500 placeholder:text-gray-500"
           />
+          <Button className="rounded-r-full py-[22px] bg-blue-600">Search</Button>
         </div>
 
         {/* Nav Buttons */}
         <nav className="flex items-center gap-3">
-          {session ? (
+          {session || user ? (
             <DropDown />
           ) : (
             <Link href="/login">
