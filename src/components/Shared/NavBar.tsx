@@ -6,9 +6,10 @@ import { Heart, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { Tsession } from "@/types/type";
 import DropDown from "../modules/dropdown";
+import NavigationMenu from "../modules/NavigationMenu";
 
 const Navbar = ({ session,user }: { session: Tsession | null; user:any }) => {
-  console.log(user)
+  
   return (
     <header className="border-b bg-white shadow-sm top-0 z-50 w-full py-3">
       <div className="flex md:hidden p-3">
@@ -19,13 +20,14 @@ const Navbar = ({ session,user }: { session: Tsession | null; user:any }) => {
           />
         <Button className="rounded-r-full py-[22px] bg-blue-600">Search</Button>
       </div>
+     
       <div className="w-full px-4 flex justify-between items-center h-16 gap-4">
 
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition">
           <Logo />
-          <span className="text-2xl font-black">Next Mart</span>
+          <span className="text-xl md:text-2xl font-black">Next Mart</span>
         </Link>
 
         {/* Search Input */}
@@ -48,19 +50,14 @@ const Navbar = ({ session,user }: { session: Tsession | null; user:any }) => {
             </Link>
           )}
 
-          <Button
-            variant="outline"
-            className="rounded-full p-0 size-10 hover:bg-pink-100 transition"
-          >
-            <Heart className="text-pink-500" />
-          </Button>
 
           <Button
             variant="outline"
-            className="rounded-full p-0 size-10 hover:bg-yellow-100 transition"
+            className="rounded-full p-0 size-9 hover:bg-orange-200 transition"
           >
-            <ShoppingBag className="text-yellow-500" />
+            <ShoppingBag className="text-yellow-500 size-5" />
           </Button>
+          <NavigationMenu></NavigationMenu>
         </nav>
       </div>
       
