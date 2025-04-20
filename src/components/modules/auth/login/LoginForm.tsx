@@ -1,69 +1,74 @@
 "use client";
 import { signIn } from "next-auth/react";
-import google from '../../../../app/assets/google.png'
-import Logo from "@/app/assets/svgs/Logo"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { motion } from "motion/react"
+import google from '../../../../app/assets/google.png';
+import Logo from "@/app/assets/svgs/Logo";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import {  FieldValues, SubmitHandler, useForm } from "react-hook-form"
-import { FaFacebook } from "react-icons/fa"
-import { toast } from 'sonner'
+import Image from 'next/image';
+import Link from 'next/link';
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FaFacebook } from "react-icons/fa";
+import { toast } from 'sonner';
 import { LoginUser } from "@/services/Authservices";
 import { TLogin } from "@/types/type";
 import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-    const router=useRouter()
-    const form = useForm()
-    const {formState:{isSubmitting}}=form
-    const onSubmit:SubmitHandler<FieldValues> =async (data) => {
-        
-        try{
-            
-             const res=await LoginUser(data as TLogin)
-             
-             if(res.success){
-                toast.success(res.message,{
-                    style:{
-                        background:"white",
-                        color:"green"
+    const router = useRouter();
+    const form = useForm();
+    const { formState: { isSubmitting } } = form;
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        try {
+            const res = await LoginUser(data as TLogin);
+
+            if (res.success) {
+                toast.success(res.message, {
+                    style: {
+                        background: "white",
+                        color: "green"
                     },
-                    position:"top-left"
-                })
-                router.push('/')
-             }
-             else{
-                toast.error("Something went wrong",{
-                    style:{
-                        background:"white",
-                        color:"red"
+                    position: "top-left"
+                });
+                router.push('/');
+            } else {
+                toast.error("Something went wrong", {
+                    style: {
+                        background: "white",
+                        color: "red"
                     },
-                    position:"top-left"
-                })
-             }
+                    position: "top-left"
+                });
+            }
+        } catch (err) {
+            console.log(err);
         }
-        catch(err){
-            console.log(err)
-        }
-    }
+    };
+
     return (
-        <motion.div initial={{scale:0,opacity:0}} animate={{scale:1,opacity:1}} transition={{duration:0.5,delay:0.3}} className="p-6 rounded-[8px] shadow-2xl w-[360px] md:w-[575px] lg:w-[400px]">
-            <div className="flex items-center space-x-4 ">
+        <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-white p-8 rounded-2xl shadow-2xl w-[360px] md:w-[475px] lg:w-[420px] mx-auto space-y-6"
+        >
+            {/* Header */}
+            <div className="flex items-center space-x-4">
                 <Logo />
                 <div>
-                    <h1 className="text-2xl font-semibold">Login</h1>
-                    <p className="text-sm font-medium text-gray-600">
-                        Join us today and start your journey!
+                    <h1 className="text-3xl font-bold text-gray-800">Login</h1>
+                    <p className="text-sm text-gray-500">
+                        Welcome back! Please enter your credentials.
                     </p>
                 </div>
             </div>
+
+            {/* Form */}
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 mt-3">
-                  
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                     <FormField
                         control={form.control}
                         name="email"
@@ -71,9 +76,12 @@ const LoginPage = () => {
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input className="h-[42px] rounded-none" {...field} value={field.value || ""} />
+                                    <Input
+                                        className="h-[44px] rounded-md px-3 text-base"
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
                                 </FormControl>
-                                
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -85,35 +93,54 @@ const LoginPage = () => {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input className="h-[42px] rounded-none" {...field} value={field.value || ""} />
+                                    <Input
+                                        type="password"
+                                        className="h-[44px] rounded-md px-3 text-base"
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
                                 </FormControl>
-                                
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <Button className="cursor-pointer w-full text-[18px] h-[43px] rounded-none" type="submit">{isSubmitting?"Loging...":"Login"}</Button>
+                    <Button
+                        className="w-full h-[44px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                        type="submit"
+                    >
+                        {isSubmitting ? "Logging in..." : "Login"}
+                    </Button>
                 </form>
             </Form>
-            <div>
-                 
-                 <div className="mt-4">
-                     <button onClick={()=>signIn('facebook',{
-                        callbackUrl:'http://localhost:3000/'
-                     })} className="cursor-pointer w-full font-medium flex space-x-2 justify-center items-center h-[45px] border-2 border-blue-500">
-                         <FaFacebook className="text-blue-500 text-[32px]"></FaFacebook>
-                         <span className=''>Sign In With Facebook</span>
-                     </button>
-                     <button onClick={()=>signIn('google',{
-                        callbackUrl:'http://localhost:3000/'
-                     })} className="cursor-pointer w-full font-medium flex mt-4 space-x-2 justify-center items-center h-[45px] border-2 border-black">
-                         <Image src={google} height={30} width={30} alt='Google'></Image>
-                         <span className=''>Sign In With Facebook</span>
-                     </button>
-                 </div>
-                 <Link href={'/register'} className='text-center mt-2 block'>Have not any account?</Link>
+
+            {/* OAuth Section */}
+            <div className="space-y-3">
+                <button
+                    onClick={() => signIn('facebook', { callbackUrl: 'http://localhost:3000/' })}
+                    className="flex items-center justify-center w-full h-[45px] border border-blue-500 rounded-md space-x-3 hover:bg-blue-50 transition"
+                >
+                    <FaFacebook className="text-blue-500 size-6" />
+                    <span className="font-medium text-blue-600">Continue with Facebook</span>
+                </button>
+
+                <button
+                    onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000/' })}
+                    className="flex items-center justify-center w-full h-[45px] border border-gray-400 rounded-md space-x-3 hover:bg-gray-50 transition"
+                >
+                    <Image src={google} height={24} width={24} alt="Google" />
+                    <span className="font-medium text-gray-700">Continue with Google</span>
+                </button>
             </div>
+
+            {/* Link to Register */}
+            <p className="text-center text-sm text-gray-600 mt-2">
+                Don't have an account?{" "}
+                <Link href="/register" className="text-blue-600 hover:underline font-medium">
+                    Register here
+                </Link>
+            </p>
         </motion.div>
-    )
-}
-export default LoginPage
+    );
+};
+
+export default LoginPage;

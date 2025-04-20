@@ -13,6 +13,7 @@ import { signOut } from "next-auth/react";
 import user from "../../app/assets/user.png";
 import Image from "next/image";
 import { LogOut, User, LayoutDashboard, PlusSquare } from "lucide-react";
+import Link from "next/link";
 
 const DropDown = () => {
   const handleLogout = async () => {
@@ -47,7 +48,7 @@ const DropDown = () => {
           </DropdownMenuItem>
           <DropdownMenuItem className="gap-2 hover:bg-muted">
             <PlusSquare className="h-4 w-4" />
-            Create Shop
+            <Link href={'/create-shop'}>Create Shop</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="gap-2 hover:bg-muted">
             <LayoutDashboard className="h-4 w-4" />

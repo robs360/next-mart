@@ -57,7 +57,7 @@ const Navbar = ({ session,user }: { session: Tsession | null; user:any }) => {
           >
             <ShoppingBag className="text-yellow-500 size-5" />
           </Button>
-          <NavigationMenu></NavigationMenu>
+          
         </nav>
       </div>
       
