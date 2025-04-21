@@ -14,9 +14,11 @@ import { FaFacebook } from "react-icons/fa";
 import { toast } from 'sonner';
 import { LoginUser } from "@/services/Authservices";
 import { TLogin } from "@/types/type";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginPage = () => {
+    const search=useSearchParams()
+    const redirect=search.get('redirectPath')
     const router = useRouter();
     const form = useForm();
     const { formState: { isSubmitting } } = form;
@@ -33,7 +35,12 @@ const LoginPage = () => {
                     },
                     position: "top-left"
                 });
-                router.push('/');
+                if(redirect){
+                    router.push(redirect)
+                }
+                else{
+                    router.push('/')
+                }
             } else {
                 toast.error("Something went wrong", {
                     style: {
